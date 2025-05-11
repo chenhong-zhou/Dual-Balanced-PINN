@@ -21,8 +21,6 @@ from torch.optim.lr_scheduler import StepLR, ExponentialLR, MultiStepLR
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-
-
 # experiment setup
 lx=ly=-1
 rx=ry=1
@@ -124,16 +122,11 @@ def Helmholtz_res(uhat, data):
     return residual
 
 
-
-i_print = 100
-
-
-
 lr = 1e-3
 mm         = 10   
 alpha_ann  = 0.5
 Adam_n_epochs   = 30000 
-
+i_print = 100
 
 N_r = 20000
 N_bc = 100
@@ -151,7 +144,7 @@ else:
 print('guding_lr, lr: ', guding_lr, lr)
 
 
-method_list = ['LC_PINN_mean', 'LC_PINN_std', 'LC_PINN_kurt']
+method_list = ['DB_PINN_mean', 'DB_PINN_std', 'DB_PINN_kurt']
 
 
 for i in range(3):
@@ -224,7 +217,7 @@ for i in range(3):
                         lam_avg_bc_1 = torch.zeros(1, device=device)
                         running_mean_L = torch.zeros(1, device=device)
                     
-                    if method == 'LC_PINN_mean':
+                    if method == 'DB_PINN_mean':
                         hat_all = maxr/meanb0 + maxr/meanb1 
                         
                         mean_param = (1. - 1 /N_l)    
@@ -239,7 +232,7 @@ for i in range(3):
                         lam_avg_bc_1 = lambd_1
                     
                     
-                    elif method == 'LC_PINN_std':
+                    elif method == 'DB_PINN_std':
                         hat_all = stdr/stdb0 + stdr/stdb1
                         
                         mean_param = (1. - 1 /N_l)    
@@ -254,7 +247,7 @@ for i in range(3):
                         lam_avg_bc_1 = lambd_1
                     
                     
-                    elif method == 'LC_PINN_kurt':
+                    elif method == 'DB_PINN_kurt':
                         covr= stdr/kurtr
                         covb0= stdb0/kurtb0
                         covb1= stdb1/kurtb1
