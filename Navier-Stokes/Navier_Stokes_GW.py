@@ -19,17 +19,12 @@ from torch.optim.lr_scheduler import StepLR, ExponentialLR, MultiStepLR
 
 from scipy.interpolate import griddata
 
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-
 
 
 # experiment setup
 lx=ly=0.0
 rx=ry=1.0
-
-
 
 u_ref= np.genfromtxt("../data/Lid-driven-Cavity/reference_u.csv", delimiter=',')    
 v_ref= np.genfromtxt("../data/Lid-driven-Cavity/reference_v.csv", delimiter=',')   
@@ -47,8 +42,6 @@ u_sol = u_ref.T.flatten()[:,None]
 v_sol = v_ref.T.flatten()[:,None]
 
 Re = 100.0
-
-
 
 
 def sampler(num_r, num_b):   
@@ -142,14 +135,8 @@ def NS_uv(uhat, data):  #data: (x,y)   uhat: (psi, p)
 
 
 
-
-
-
-
-i_print = 100
-
 lr = 1e-3
-
+i_print = 100
 mm         = 10   
 alpha_ann  = 0.1
 Adam_n_epochs   = 40000 
