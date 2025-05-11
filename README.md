@@ -5,7 +5,11 @@ Official code for the IJCAI 2025 paper "Dual-Balancing for Physics-Informed Neur
 
 ## Usage
 
-Here we give the code to reproduce the results on six PDEs: Klein-Gordon Equation, Wave Equation, Helmholtz Equation, Allen-Cahn Equation, Burgers Equation, and Navier-Stokes Equation. Code was implemented in `python 3.7`. Just run the code in the .py script in the desired folder, for example:
+Here we give the code to reproduce the results on six PDEs: Klein-Gordon Equation, Wave Equation, Helmholtz Equation, Allen-Cahn Equation, Burgers Equation, and Navier-Stokes Equation. 
+
+Code was implemented in `python 3.7`. 
+
+Just run the code in the .py script in the desired folder, for example:
 
 ```
 python Klein-Gordon/Klein-Gordon.py
