@@ -22,8 +22,6 @@ from scipy.interpolate import griddata
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-
-
 # experiment setup
 lx=ly=0.0
 rx=ry=1.0
@@ -140,14 +138,9 @@ def NS_uv(uhat, data):  #data: (x,y)   uhat: (psi, p)
 
 
 
-
-
-i_print = 100
-
-
-
 lr = 1e-3
 mm         = 10   
+i_print = 100
 alpha_ann  = 0.1
 Adam_n_epochs   = 40000 
 
@@ -173,7 +166,7 @@ if not os.path.exists(path_loc):
 
 
 
-method_list = ['LC_PINN_mean', 'LC_PINN_std', 'LC_PINN_kurt'] 
+method_list = ['DB_PINN_mean', 'DB_PINN_std', 'DB_PINN_kurt'] 
 
 for i in range(3): 
     method = method_list[i]
@@ -264,7 +257,7 @@ for i in range(3):
                         running_mean_L = torch.zeros(1, device=device)
                     
                     
-                    if  method == 'LC_PINN_mean':
+                    if  method == 'DB_PINN_mean':
                         # max/avg
                         hat_all = maxr/meanb0 + maxr/meanb1
                         
@@ -280,7 +273,7 @@ for i in range(3):
                         lam_avg_bc_1 = lambd_bc_1
                         
                         
-                    elif method == 'LC_PINN_std':
+                    elif method == 'DB_PINN_std':
                         # max/avg
                         hat_all = stdr/stdb0 + stdr/stdb1
                         
@@ -296,7 +289,7 @@ for i in range(3):
                         lam_avg_bc_1 = lambd_bc_1
                         
                         
-                    elif method == 'LC_PINN_kurt':
+                    elif method == 'DB_PINN_kurt':
                         covr= stdr/kurtr
                         covb0= stdb0/kurtb0
                         covb1= stdb1/kurtb1
