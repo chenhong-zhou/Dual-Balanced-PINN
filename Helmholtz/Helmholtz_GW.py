@@ -125,15 +125,11 @@ def Helmholtz_res(uhat, data):
     return residual
 
 
-
-
-i_print = 100
-
-
 lr = 1e-3
 mm         = 10  
 alpha_ann  = 0.5
 Adam_n_epochs   = 30000 
+i_print = 100
 
 N_r = 20000
 N_bc = 100
