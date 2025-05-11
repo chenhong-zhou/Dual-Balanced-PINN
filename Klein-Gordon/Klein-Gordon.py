@@ -128,14 +128,14 @@ def KG_res_u_t(uhat, data): #data=(x,t)
 
 
 
-i_print = 100
-
 
 all_losses=[]
 list_of_l2_Errors=[]
 
 lr = 1e-3 
 mm         = 100
+i_print = 100
+
 alpha_ann  = 0.5
 n_epochs   = 20000 
 num_r = 10000
@@ -167,7 +167,7 @@ u_sol = kg_equation(xx,tt)
 X = np.vstack([xx.ravel(), tt.ravel()]).T
 
 
-method_list = [0, 1, 2, 3, 'LC_PINN_mean', 'LC_PINN_std', 'LC_PINN_kurt']
+method_list = [0, 1, 2, 3, 'DB_PINN_mean', 'DB_PINN_std', 'DB_PINN_kurt']
 #0: vanilla PINN (Equal Weighting); GW-PINN: 1: mean (max/avg); 2: std; 3: kurtosis;  
 
 for i in range(7): 
@@ -277,7 +277,7 @@ for i in range(7):
                         lambd_ic     = (1-alpha_ann)*lambd_ic + alpha_ann*lamb_hat
                     
                     
-                    elif method == 'LC_PINN_mean': 
+                    elif method == 'DB_PINN_mean': 
                         
                         hat_all = maxr/meanb + maxr/meani
                         mean_param = (1. - 1 / N_l)
@@ -290,7 +290,7 @@ for i in range(7):
                         lam_avg_bc = lambd_bc
                         lam_avg_ic = lambd_ic
                     
-                    elif method == 'LC_PINN_std':  
+                    elif method == 'DB_PINN_std':  
                         
                         hat_all = stdr/stdb + stdr/stdi
                         mean_param = (1. - 1 / N_l)
@@ -304,7 +304,7 @@ for i in range(7):
                         lam_avg_ic = lambd_ic
                     
                     
-                    elif method == 'LC_PINN_kurt':  
+                    elif method == 'DB_PINN_kurt':  
                         
                         covr= stdr/kurtr
                         covb= stdb/kurtb
