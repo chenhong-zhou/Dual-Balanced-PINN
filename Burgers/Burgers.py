@@ -14,12 +14,10 @@ from torch.autograd import grad
 from torch.optim import Adam
 from torch.optim.lr_scheduler import StepLR, ExponentialLR, MultiStepLR
 from scipy.interpolate import griddata
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 from pyDOE import lhs
 import scipy.io
 
-
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def sampler(num_r, num_b, num_0):
@@ -96,10 +94,10 @@ def Burgers_res(uhat, data, lam1, lam2):  #data: (x, t)
 
 
 
-i_print = 10
 
 all_losses=[]
 list_of_l2_Errors=[]
+i_print = 10
 
 lr = 1e-3  
 lr_lbfgs = 0.1  
@@ -114,10 +112,8 @@ layer_sizes = [2, 20, 20, 20, 20, 20, 20, 20, 20, 1]
 num_0 = 100
 num_b = 100   #actually N_b is 200 for lb and ub
 num_r = 10000
-
 num_u = 300
 D_nu = 0.01/np.pi
-
 
 
 guding_lr = True
@@ -136,8 +132,7 @@ if not os.path.exists(path_loc):
 
 
 
-
-method_list = [0, 1, 2, 3, 'LC_PINN_mean', 'LC_PINN_std', 'LC_PINN_kurt']
+method_list = [0, 1, 2, 3, 'DB_PINN_mean', 'DB_PINN_std', 'DB_PINN_kurt']
 #0: vanilla PINN (Equal Weighting); GW-PINN: 1: mean (max/avg); 2: std; 3: kurtosis;  
 
 for i in range(7): 
@@ -229,7 +224,6 @@ for i in range(7):
             
             L_t = torch.stack((l_reg, l_bc, l_ic, l_data))
             
-            
             with torch.no_grad():
                 if epoch % mm == 0:
                     N_l += 1
@@ -282,7 +276,7 @@ for i in range(7):
                         lamb_hat = covr/covd
                         lambd_d     = (1-alpha_ann)*lambd_d + alpha_ann*lamb_hat
                         
-                    elif method == 'LC_PINN_mean':  
+                    elif method == 'DB_PINN_mean':  
                         hat_all = maxr/meanb + maxr/meani + maxr/meand
                         
                         mean_param = (1. - 1 / N_l)
@@ -300,7 +294,7 @@ for i in range(7):
                         lam_avg_ic = lambd_ic
                         lam_avg_d = lambd_d
                             
-                    elif method == 'LC_PINN_std': 
+                    elif method == 'DB_PINN_std': 
                         hat_all = stdr/stdb + stdr/stdi + stdr/stdd
                         
                         mean_param = (1. - 1 / N_l)
@@ -318,8 +312,7 @@ for i in range(7):
                         lam_avg_ic = lambd_ic
                         lam_avg_d = lambd_d
                     
-                    
-                    elif method == 'LC_PINN_kurt':
+                    elif method == 'DB_PINN_kurt':
                         covr= stdr/kurtr
                         covb= stdb/kurtb
                         covi= stdi/kurti
