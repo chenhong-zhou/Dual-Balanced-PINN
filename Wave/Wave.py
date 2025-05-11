@@ -17,9 +17,7 @@ from torch.autograd import grad
 from torch.optim import Adam
 from torch.optim.lr_scheduler import StepLR, ExponentialLR, MultiStepLR
 
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
 
 # experiment setup
 lx=0
@@ -138,13 +136,9 @@ def Wave_res_u_t(uhat, data): #data = (x,t)
     return dudt + 0*uhat
 
 
-
-
-
-i_print = 100
-
 lr = 1e-3  
 mm         = 50 
+i_print = 100
 alpha_ann  = 0.1  
 
 Adam_n_epochs   = 80000
@@ -190,7 +184,7 @@ u_sol = u_func(X, a, c)
 
 
 
-method_list = [0, 1, 2, 3, 'LC_PINN_mean', 'LC_PINN_std', 'LC_PINN_kurt']
+method_list = [0, 1, 2, 3, 'DB_PINN_mean', 'DB_PINN_std', 'DB_PINN_kurt']
 #0: vanilla PINN (Equal Weighting); GW-PINN: 1: mean (max/avg); 2: std; 3: kurtosis;  
 
 
@@ -294,7 +288,7 @@ for i in range(7):
                         lamb_hat = covr/covt
                         lambd_ut     = (1-alpha_ann)*lambd_ut + alpha_ann*lamb_hat
                         
-                    elif method == 'LC_PINN_mean':  
+                    elif method == 'DB_PINN_mean':  
                         
                         hat_all = maxr/meanu + maxr/meant
                         
@@ -308,7 +302,7 @@ for i in range(7):
                         lam_avg_u = lambd_u
                         lam_avg_ut = lambd_ut
                      
-                    elif method == 'LC_PINN_std': 
+                    elif method == 'DB_PINN_std': 
                         hat_all = stdr/stdu + stdr/stdt
                         
                         mean_param = (1. - 1 / N_l)
@@ -322,7 +316,7 @@ for i in range(7):
                         lam_avg_ut = lambd_ut
                         
                         
-                    elif method == 'LC_PINN_kurt': 
+                    elif method == 'DB_PINN_kurt': 
                         covr= stdr/kurtr
                         covu= stdu/kurtu
                         covt= stdt/kurtt
