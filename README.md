@@ -37,6 +37,8 @@ If you find this repo useful, please cite our paper.
 
 We appreciate the following github repos a lot for their valuable code base or datasets:
 
+https://github.com/neuraloperator/Geo-FNO
+
 https://github.com/PredictiveIntelligenceLab/GradientPathologiesPINNs/tree/master
 
 https://github.com/cvjena/GradStats4PINNs
